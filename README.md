@@ -1,5 +1,7 @@
 # clocks-www
 
+<img src="misc/clocks.png" style="max-width:640px;" />
+
 A very simple web application for creating and displaying multiple clocks using
 Simon Jones' [svg-clock](https://github.com/simonrjones/svg-clock). Clocks are
 stored locally to the web browser using Mozilla's
