@@ -35,6 +35,12 @@ function clocks_save_clocks(clocks){
 
 function clocks_create_clock(e){
 
+    /*
+      clearly we should be using a geocoder to figure out the timezone
+      but that's actually a whole lot of UI work so for the moment it
+      is considered yak-shaving (20141116/straup)
+    */
+
     var loc = prompt('Location:');
     
     if (! loc){
@@ -83,11 +89,51 @@ function clocks_redraw_clocks(clocks){
 }
 
 function clocks_draw_clocks(clocks){
+    
+    clocks = clocks_sort_clocks(clocks);
 
     for (loc in clocks){
 	var details = clocks[loc];
 	clocks_draw_clock(loc, details);
     }
+}
+
+function clocks_sort_clocks(clocks){
+
+    var tmp = {};
+
+    for (loc in clocks){
+
+	var offset = parseInt(clocks[loc]['offset']);
+	
+	if (! tmp[offset]){
+	    tmp[offset] = new Array();
+	}
+
+	tmp[offset].push(loc);
+    }
+
+    function compareNumbers(a, b){
+	return a - b;
+    }
+
+    var keys = Object.keys(tmp);
+    keys.sort(compareNumbers);
+
+    var sorted = {};
+
+    for (var i in keys){
+	
+	var offset = keys[i];
+
+	for (var j in tmp[offset]){
+	    var loc = tmp[offset][j];
+
+	    sorted[loc] = clocks[loc];
+	}
+    }
+
+    return sorted;
 }
 
 function clocks_draw_clock(loc, details){
@@ -144,7 +190,7 @@ function clocks_clock_id(loc, details){
 
     var id = loc;
     id = id.toLowerCase();    
-    id = id.replace(" ", "-");
+    id = id.replace(/ /g, "-");
 
     id = "clock-" + id;
     return id;
