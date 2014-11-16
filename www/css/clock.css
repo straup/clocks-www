@@ -39,13 +39,29 @@ button {
     }
 
     .clock-tomorrow line {
-    	stroke: #999 !important;
+    	stroke: darkslategrey !important;
     }
 
     .clock-tomorrow circle {
-    	stroke: #999 !important;
+    	stroke: darkslategrey !important;
     }
 
     .clock-tomorrow circle:last-child {
+    	fill: darkslategrey !important;
+    }
+
+    .clock-yesterday line {
+    	stroke: #999 !important;
+    }
+
+    .clock-yesterday circle {
+    	stroke: #999 !important;
+    }
+
+    .clock-yesteday circle:last-child {
     	fill: #999 !important;
+    }
+
+    .clock-pm circle {
+       fill: #ededed !important;
     }

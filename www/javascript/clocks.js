@@ -145,20 +145,21 @@ function clocks_draw_clock(loc, details){
     s.setAttribute("id", id);
 
     var d = document.createElement("div");
-    d.setAttribute("class", "clock");
     d.setAttribute("data-location", loc);   
 
-    if (! clocks_is_today(loc, details)){
+    var cls = new Array()
+    cls.push("clock");
 
-	var add_class = "clock-tomorrow";
+    var stats = clocks_stats(loc, details);
 
-	if (clocks_is_yesterday(loc, details)){
-	    add_class = "clock-yesterday";
-	}
+    cls.push("clock-" + stats['tod']);
 
-	var classes = d.getAttribute("class");
-	d.setAttribute("class", classes + " " + add_class);
+    if (! stats['today']){
+	var foo = (stats['tomorrow']) ? "clock-tomorrow" : "clock-yesterday";
+	cls.push(foo);
     }
+
+    d.setAttribute("class", cls.join(" "));
 
     var c = document.getElementById("clocks");    
     d.appendChild(s);
@@ -208,8 +209,63 @@ function clocks_clock_id(loc, details){
     return id;
 }
 
-function clocks_is_today(loc, details){
-    return true;
+function clocks_stats(loc, details){
+
+    var dt = new Date();
+
+    var here_offset = dt.getTimezoneOffset() / 60;
+    var there_offset = parseInt(details['offset']);
+
+    var here = clocks_get_dt(0 - here_offset);
+    var there = clocks_get_dt(there_offset);
+
+    var today = null;
+    var tomorrow = null;
+    var yesterday = null;
+
+    if (clocks_dt_to_ymd(here) == clocks_dt_to_ymd(there)){
+	today = true;
+    }
+
+    else if (there.getTime() > here.getTime()){
+	tomorrow = true;
+    }
+
+    else {
+	yesterday = true;
+    }
+
+    var hrs = there.getUTCHours();
+    var tod = (hrs < 12) ? 'am' : 'pm';
+
+    var stats = {
+	'today': today,
+	'tomorrow': tomorrow,
+	'yesterday': yesterday,
+	'tod' : tod,
+    };
+
+    console.log(stats);
+    return stats;
+}
+
+function clocks_dt_to_ymd(dt){
+    var iso = dt.toISOString();
+    var ymd = iso.split("T")[0];
+    return ymd;
+}
+
+// offset is in hours
+
+function clocks_get_dt(offset){
+
+    var utc = new Date();
+    offset = ((offset * 60) * 60 * 1000);
+
+    var dt = new Date();
+    dt.setTime(utc.getTime() + offset);
+
+    return dt;
 }
 
 function clocks_is_yesterday(loc, details){
