@@ -148,6 +148,18 @@ function clocks_draw_clock(loc, details){
     d.setAttribute("class", "clock");
     d.setAttribute("data-location", loc);   
 
+    if (! clocks_is_today(loc, details)){
+
+	var add_class = "clock-tomorrow";
+
+	if (clocks_is_yesterday(loc, details)){
+	    add_class = "clock-yesterday";
+	}
+
+	var classes = d.getAttribute("class");
+	d.setAttribute("class", classes + " " + add_class);
+    }
+
     var c = document.getElementById("clocks");    
     d.appendChild(s);
 
@@ -194,4 +206,16 @@ function clocks_clock_id(loc, details){
 
     id = "clock-" + id;
     return id;
+}
+
+function clocks_is_today(loc, details){
+    return true;
+}
+
+function clocks_is_yesterday(loc, details){
+
+}
+
+function clocks_is_tomorrow(loc, details){
+
 }
