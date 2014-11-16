@@ -1,7 +1,8 @@
 CACHE MANIFEST
-# v1
+# v2
 
 CACHE:
+index.html
 offline.html
 css/clocks.css
 javascript/clocks.dependencies.min.js
