@@ -128,15 +128,16 @@ function clocks_draw_clock(loc, details){
 
 function clocks_start_clock(loc, details){
 
-    var dt = new Date();
-    var offset = dt.getTimezoneOffset() / 60;
-
     var id = clocks_clock_id(loc, details);
-    console.log("new clock " + id);
 
-    var cl = new Clock(id, (offset - details['offset']));
+    var dt = new Date();
+    var tz_offset = dt.getTimezoneOffset() / 60;
+
+    var loc_offset = parseInt(details['offset']);
+    var offset = tz_offset + loc_offset;
+
+    var cl = new Clock(id, offset);
     cl.startClock();
-    // cl.hideSecondHand();
 }
 
 function clocks_clock_id(loc, details){
