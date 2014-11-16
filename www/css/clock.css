@@ -1,0 +1,26 @@
+    body {
+    font-family: sans-serif;
+    font-weight:100;
+    }
+
+    #clocks div { width: 300px; heigth: 350px; float: left; text-align: center; margin-bottom: 2em; }
+
+    div:after {
+    content:attr(data-location);
+    }
+
+    svg {
+    	height:300px;
+    }
+
+    .clock-tomorrow line {
+    	stroke: #999 !important;
+    }
+
+    .clock-tomorrow circle {
+    	stroke: #999 !important;
+    }
+
+    .clock-tomorrow circle:last-child {
+    	fill: #999 !important;
+    }
