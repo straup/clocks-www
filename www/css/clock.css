@@ -23,7 +23,7 @@ button {
        font-weight:700;
 }
 
-    .clock {
+.clock {
     	width: 300px;
 	heigth: 350px;
 	float: left;
@@ -35,10 +35,7 @@ button {
     }
 
     svg {
-    	height:260px;
-	padding:0px;
-	margin:0px;
-	// border:2px solid red;
+    	height:300px;
     }
 
     .clock-tomorrow line {

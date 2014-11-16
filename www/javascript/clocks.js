@@ -3,8 +3,10 @@ function clocks_init(){
     clocks_load_clocks(clocks_draw_clocks);
 
     var a = document.getElementById("add");
-    a.addEventListener("click", clocks_create_clock, false);
 
+    if (a){
+	a.addEventListener("click", clocks_create_clock, false);
+    }
 }
 
 function clocks_load_clocks(cb){
@@ -14,10 +16,10 @@ function clocks_load_clocks(cb){
 	});
 }
 
-function clocks_remove_clock(label){
+function clocks_remove_clock(loc){
 
     var cb = function(clocks){
-	del(clocks[label]);
+	del(clocks[loc]);
 
 	clocks_save_clocks(clocks);
     };
@@ -65,6 +67,12 @@ function clocks_add_clock(loc, details){
     clocks_load_clocks(cb);
 }
 
+function clocks_redraw_clocks(clocks){
+
+    // remove all the clocks here
+    clocks_draw_clocks(clocks);
+}
+
 function clocks_draw_clocks(clocks){
 
     for (loc in clocks){
@@ -76,18 +84,35 @@ function clocks_draw_clocks(clocks){
 function clocks_draw_clock(loc, details){
 
     var id = clocks_clock_id(loc, details);
-    
-    var s = document.createElement("svg");
+
+    var ns = "http://www.w3.org/2000/svg";
+    var s = document.createElementNS(ns, "svg");
     s.setAttribute("id", id);
 
     var d = document.createElement("div");
     d.setAttribute("class", "clock");
-    d.setAttribute("data-location", loc);
-    
-    var c = document.getElementById("clocks");
-    
+    d.setAttribute("data-location", loc);   
+
+    var c = document.getElementById("clocks");    
     d.appendChild(s);
-    c.appendChild(d);
+
+    d.addEventListener("click", function(e){
+	    var t = e.target;
+
+	    if (t.nodeName != 'DIV'){
+		return;
+	    }
+
+	    var loc = t.getAttribute("data-location");
+
+	    if (! confirm("Remove this clock?")){
+		return;
+	    }
+	    
+	    clocks_remove_clock(loc);
+    }, false);
+
+    document.body.appendChild(d);
 
     clocks_start_clock(loc, details);
 }
@@ -98,7 +123,8 @@ function clocks_start_clock(loc, details){
     var offset = dt.getTimezoneOffset() / 60;
 
     var id = clocks_clock_id(loc, details);
-    
+    console.log("new clock " + id);
+
     var cl = new Clock(id, (offset - details['offset']));
     cl.startClock();
     // cl.hideSecondHand();
