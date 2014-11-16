@@ -81,8 +81,9 @@ function clocks_draw_clock(loc, details){
     s.setAttribute("id", id);
 
     var d = document.createElement("div");
+    d.setAttribute("class", "clock");
     d.setAttribute("data-location", loc);
-
+    
     var c = document.getElementById("clocks");
     
     d.appendChild(s);
@@ -100,7 +101,7 @@ function clocks_start_clock(loc, details){
     
     var cl = new Clock(id, (offset - details['offset']));
     cl.startClock();
-    cl.hideSecondHand();
+    // cl.hideSecondHand();
 }
 
 function clocks_clock_id(loc, details){

@@ -1,16 +1,44 @@
-    body {
+body {
     font-family: sans-serif;
     font-weight:100;
+    margin:0px;
+    padding:0px;
     }
 
-    #clocks div { width: 300px; heigth: 350px; float: left; text-align: center; margin-bottom: 2em; }
+#controls {
+     text-align:right;
+     display:block;
+     padding:.25em;
+     border-bottom: 1px solid #ccc;
+     padding-right:.75em;   
+     margin-bottom:.5em;
+}
 
-    div:after {
-    content:attr(data-location);
+button {
+       border-radius:0px;
+       border:none;
+       background-color:#fff;
+       padding:0;
+       font-size:1.5em;
+       font-weight:700;
+}
+
+    .clock {
+    	width: 300px;
+	heigth: 350px;
+	float: left;
+	text-align: center;
+    }
+
+    .clock:after {
+        content:attr(data-location);
     }
 
     svg {
-    	height:300px;
+    	height:260px;
+	padding:0px;
+	margin:0px;
+	// border:2px solid red;
     }
 
     .clock-tomorrow line {
