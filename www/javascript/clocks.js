@@ -267,11 +267,3 @@ function clocks_get_dt(offset){
 
     return dt;
 }
-
-function clocks_is_yesterday(loc, details){
-
-}
-
-function clocks_is_tomorrow(loc, details){
-
-}
