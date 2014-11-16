@@ -1,38 +1,38 @@
-function foo_init(){
+function clocks_init(){
 
-    foo_load_clocks(foo_draw_clocks);
+    clocks_load_clocks(clocks_draw_clocks);
 
     var a = document.getElementById("add");
-    a.addEventListener("click", foo_create_clock, false);
+    a.addEventListener("click", clocks_create_clock, false);
 
 }
 
-function foo_load_clocks(cb){
+function clocks_load_clocks(cb){
 
     localforage.getItem('clocks', function(rsp){
 	    cb(rsp);
 	});
 }
 
-function foo_remove_clock(label){
+function clocks_remove_clock(label){
 
     var cb = function(clocks){
 	del(clocks[label]);
 
-	foo_save_clocks(clocks);
+	clocks_save_clocks(clocks);
     };
 
-    foo_load_clocks(cb);
+    clocks_load_clocks(cb);
 }
 
-function foo_save_clocks(clocks){
+function clocks_save_clocks(clocks){
 
     localforage.setItem('clocks', clocks, function(rsp){
-	    foo_draw_clocks(rsp);
+	    clocks_draw_clocks(rsp);
 	})
 }
 
-function foo_create_clock(e){
+function clocks_create_clock(e){
 
     var loc = prompt('Location:');
     
@@ -47,10 +47,10 @@ function foo_create_clock(e){
     }
 
     var details = { 'offset': offset };
-    foo_add_clock(loc, details);
+    clocks_add_clock(loc, details);
 }
 
-function foo_add_clock(loc, details){
+function clocks_add_clock(loc, details){
 
     var cb = function(clocks){
 
@@ -59,23 +59,23 @@ function foo_add_clock(loc, details){
 	}
 
 	clocks[loc] = details;
-	foo_save_clocks(clocks);
+	clocks_save_clocks(clocks);
     };
 
-    foo_load_clocks(cb);
+    clocks_load_clocks(cb);
 }
 
-function foo_draw_clocks(clocks){
+function clocks_draw_clocks(clocks){
 
     for (loc in clocks){
 	var details = clocks[loc];
-	foo_draw_clock(loc, details);
+	clocks_draw_clock(loc, details);
     }
 }
 
-function foo_draw_clock(loc, details){
+function clocks_draw_clock(loc, details){
 
-    var id = foo_clock_id(loc, details);
+    var id = clocks_clock_id(loc, details);
     
     var s = document.createElement("svg");
     s.setAttribute("id", id);
@@ -88,22 +88,22 @@ function foo_draw_clock(loc, details){
     d.appendChild(s);
     c.appendChild(d);
 
-    foo_start_clock(loc, details);
+    clocks_start_clock(loc, details);
 }
 
-function foo_start_clock(loc, details){
+function clocks_start_clock(loc, details){
 
     var dt = new Date();
     var offset = dt.getTimezoneOffset() / 60;
 
-    var id = foo_clock_id(loc, details);
+    var id = clocks_clock_id(loc, details);
     
     var cl = new Clock(id, (offset - details['offset']));
     cl.startClock();
     cl.hideSecondHand();
 }
 
-function foo_clock_id(loc, details){
+function clocks_clock_id(loc, details){
 
     var id = loc;
     id = id.toLowerCase();    
