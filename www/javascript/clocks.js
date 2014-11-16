@@ -242,7 +242,7 @@ function clocks_stats(loc, details){
 	'today': today,
 	'tomorrow': tomorrow,
 	'yesterday': yesterday,
-	'tod' : tod,
+	'tod' : tod
     };
 
     console.log(stats);
