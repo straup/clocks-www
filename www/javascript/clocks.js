@@ -19,8 +19,7 @@ function clocks_load_clocks(cb){
 function clocks_remove_clock(loc){
 
     var cb = function(clocks){
-	del(clocks[loc]);
-
+	delete(clocks[loc]);
 	clocks_save_clocks(clocks);
     };
 
@@ -30,7 +29,7 @@ function clocks_remove_clock(loc){
 function clocks_save_clocks(clocks){
 
     localforage.setItem('clocks', clocks, function(rsp){
-	    clocks_draw_clocks(rsp);
+	    clocks_redraw_clocks(rsp);
 	})
 }
 
@@ -67,9 +66,19 @@ function clocks_add_clock(loc, details){
     clocks_load_clocks(cb);
 }
 
+function clocks_purge_clocks(){
+
+    var els = document.getElementsByClassName('clock');
+
+    while (els[0]){
+	els[0].parentNode.removeChild(els[0]);
+    }
+
+}
+
 function clocks_redraw_clocks(clocks){
 
-    // remove all the clocks here
+    clocks_purge_clocks();
     clocks_draw_clocks(clocks);
 }
 
