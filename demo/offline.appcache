@@ -1,0 +1,11 @@
+CACHE MANIFEST
+# v5
+
+CACHE:
+offline.html
+css/clocks.css
+javascript/clocks.dependencies.min.js
+javascript/clocks.combined.min.js
+
+# NETWORK:
+# FALLBACK:
